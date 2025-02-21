@@ -76,42 +76,21 @@ class FileOrganizerGUI:
         status_label = ttk.Label(self.root, textvariable=self.status_var)
         status_label.pack(pady=5)
 
-    def get_folder_name(file):
-        """Determine the folder name based on file extension"""
-        extension = file.suffix.lower()
-        return extension_map.get(extension, 'Others')
+    def browse_folder(self):
+        folder_path = filedialog.askdirectory()
+        if folder_path:
+            self.path_var.set(folder_path)
 
-    def create_folder(folder_path):
-        """Create folder if it doesn't exist"""
-        if not os.path.exists(folder_path) and not preview_only:
-            os.makedirs(folder_path)
-
-    def get_destination_filename(file, folder_name):
-        """Generate the destination filename, handling potential conflicts"""
-        destination_folder = os.path.join(downloads_path, folder_name)
-        filename = file.name
-        base_name = file.stem
-        extension = file.suffix
-        counter = 1
+    def get_planned_moves(self):
+        downloads_path = self.path_var.get()
+        if not downloads_path:
+            messagebox.showerror("Error", "Please select a folder first!")
+            return None
         
-        while os.path.exists(os.path.join(destination_folder, filename)):
-            filename = f"{base_name}_{counter}{extension}"
-            counter += 1
-            
-        return filename, os.path.join(destination_folder, filename)
-
-    def move_file(file, folder_name):
-        """Move file to appropriate folder"""
-        source = str(file)
-        destination_folder = os.path.join(downloads_path, folder_name)
-        create_folder(destination_folder)
-        
-        filename, destination = get_destination_filename(file, folder_name)
-        
-        if not preview_only:
-            shutil.move(source, destination)
-        
-        return filename
+        downloads_dir = Path(downloads_path)
+        if not downloads_dir.exists() or not downloads_dir.is_dir():
+            messagebox.showerror("Error", "Invalid folder path!")
+            return None
 
     # Process files
     planned_moves = {}
