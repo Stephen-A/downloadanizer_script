@@ -92,33 +92,51 @@ class FileOrganizerGUI:
             messagebox.showerror("Error", "Invalid folder path!")
             return None
 
-    # Process files
-    planned_moves = {}
-    downloads_dir = Path(downloads_path)
+        # Process files
+        planned_moves = {}
+        total_files = 0
 
-    print(f"{'Previewing' if preview_only else 'Organizing'} files in: {downloads_path}")
-    
-    for file in downloads_dir.iterdir():
-        if file.is_file():  # Skip if it's a directory
-            folder_name = get_folder_name(file)
-            try:
-                new_filename = move_file(file, folder_name)
-                planned_moves.setdefault(folder_name, []).append((file.name, new_filename))
-            except Exception as e:
-                print(f"Error processing {file.name}: {str(e)}")
+        for file in downloads_dir.iterdir():
+            if file.is_file():  # Skip if it's a directory
+                extension = file.suffix.lower()
+                folder_name = self.extension_map.get(extension, 'Others')
+                destination_folder = downloads_dir / folder_name
 
-    # Print summary
-    print("\nPlanned File Organization:")
-    total_files = sum(len(files) for files in planned_moves.values())
-    print(f"\nTotal files to be organized: {total_files}")
+                new_filename = file.name
+                if destination_folder.exists():
+                    counter = 1
+                    while (destination_folder / new_filename).exists():
+                        base_name = file.stem
+                        new_filename = f"{base_name}_{counter}{file.suffix}"
+                        counter += 1
+
+                    planned_moves.setdefault(folder_name, []).append((file.name, new_filename))
+                    total_files += 1
+
+        return planned_moves, total_files
     
-    for folder, files in planned_moves.items():
-        print(f"\n{folder} ({len(files)} files):")
-        for original, new in files:
-            if original != new:
-                print(f"  - {original} -> {new}")
-            else:
-                print(f"  - {original}")
+    def preview_changes(self):
+        self.preview_text.delete(1.0, tk.END)
+        self.status_var.set("Generating preview...")
+
+        result = self.get_planned_moves()
+        if not result: 
+            self.status_var.set("")
+            return
+        
+        planned_moves, total_files = result
+
+        preview_text = f"Found {total_files} files to organize:\n\n"
+        for folder, files in planned_moves.items():
+            preview_text += f"\n{folder} ({len(files)} files:\n)"
+            for file, new_name in files:
+                if file.name != new_name:
+                    preview_text += f" - {file.name} -> {new_name}\n"
+                else:
+                    preview_text += f" - {file.name}\n"
+
+        self.preview_text.insert(1.0, preview_text)
+        self.status_var.set("Preview Generated")
 
     if preview_only:
         while True:
