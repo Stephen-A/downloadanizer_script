@@ -5,22 +5,12 @@ import shutil
 from pathlib import Path
 import threading
 
-def organize_downloads(custom_path=None, preview_only=True):
-    # Get the downloads folder path
-    if custom_path:
-        downloads_path = Path(custom_path)
-    else:
-        downloads_path = Path.home() / "Downloads"
-    
-    # Verify the path exists
-    if not downloads_path.exists():
-        raise FileNotFoundError(f"The path {downloads_path} does not exist!")
-    
-    if not downloads_path.is_dir():
-        raise NotADirectoryError(f"The path {downloads_path} is not a directory!")
-    
-    # Convert to string for compatibility with os.path functions
-    downloads_path = str(downloads_path)
+
+class FileOrganizerGUI:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("File Organizer") #Add a title to application
+        self.root.geometry("600x500") #Create GUI window size
     
     # Rest of the code remains the same
     extension_map = {
@@ -39,6 +29,52 @@ def organize_downloads(custom_path=None, preview_only=True):
         '.py': 'Code', '.java': 'Code', '.cpp': 'Code', '.html': 'Code',
         '.css': 'Code', '.js': 'Code',
     }
+
+    self.setup_gui()
+
+    def setup_gui(self):
+        # Path selection frame
+        path_frame = ttk.LabelFrame(self.root, text="Select Folder", padding="10")
+        path_frame.pack(fill="x", padx=10, pady=5)
+
+        self.path_var = tk.StringVar()
+        self.path_entry = ttk.Entry(path_frame, textvariable=self.path_var)
+        self.path_entry.pack(side="left", fill="x", expand=True, padx=(0, 5))
+
+        browse_btn = ttk.Button(path_frame, text="Browse", command=self.browse_folder)
+        browse_btn.pack(side="right")
+        
+        # Preview/Organize controls
+        control_frame = ttk.Frame(self.root, padding="10")
+        control_frame.pack(fill="x", padx=10)
+
+        preview_btn = ttk.Button(path_frame, text="Preview Changes", command=self.preview_changes)
+        preview_btn.pack(side="left", padx=5)
+
+        organize_btn = ttk.Button(path_frame, text="Organize Files", command=self.organize_files)
+        organize_btn.pack(side="left", padx=5)
+
+        # Preview area
+        preview_frame = ttk.LabelFrame(self.root, text="Preview", padding="10")  
+        preview_frame.pack(fill="both", expand=True, padx=10, pady=5)
+
+        # Add scrollbar to preview area
+        scroll = ttk.Scollbar(preview_frame)
+        scroll.pack(side="right", fill="y")
+
+        self.preview_text = tk.Text(preview_frame , wrap="word", yscrollcommand=scroll.set)
+        self.preview_text.pack(fill="both", expand=True)
+        scroll.config(command=self.preview_text.yview)
+
+        # Progress bar
+        self.progress_var = tk.DoubleVar()
+        self.progress = ttk.Progressbar(self.root, variable=self.progress_var, mode='determinate')
+        self.progress.pack(fill='x', padx=10, pady=5)
+
+        # Status label
+        self.status_var = tk.StringVar()
+        status_label = ttk.Label(self.root, textvariable=self.status_var)
+        status_label.pack(pady=5)
 
     def get_folder_name(file):
         """Determine the folder name based on file extension"""
