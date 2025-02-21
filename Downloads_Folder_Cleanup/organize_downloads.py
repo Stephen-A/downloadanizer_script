@@ -119,7 +119,7 @@ def organize_downloads(custom_path=None, preview_only=True):
 if __name__ == "__main__":
     # Example usage with custom path
     try:
-        # You can replace this with your actual path
+        # You can replace this with your actual path. My downloads folder is on my B: drive.
         custom_downloads_path = "B:\Downloads"
         organize_downloads(custom_path=custom_downloads_path, preview_only=True)
     except (FileNotFoundError, NotADirectoryError) as e:
