@@ -57,23 +57,10 @@ python file_organizer.py
 You can customize the file extension mappings in the extension_map dictionary in the script. For example:
 
 python
-Copy
+```bash
 self.extension_map = {
     '.jpg': 'Images',
     '.pdf': 'Documents',
     # Add more mappings as needed
 }
-Contributing
-Contributions are welcome! If you'd like to contribute:
-
-Fork the repository.
-
-Create a new branch (git checkout -b feature/YourFeatureName).
-
-Commit your changes (git commit -m 'Add some feature').
-
-Push to the branch (git push origin feature/YourFeatureName).
-
-Open a pull request.
-
-License
+```
