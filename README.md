@@ -32,31 +32,29 @@ Preview of File Organization
 ## Steps
 1. Clone the repository:
 
-bash
-Copy
+```bash
 git clone https://github.com/your-username/file-organizer.git
 2. Navigate to the project directory:
-
-bash
-Copy
+```
+```bash
 cd file-organizer
 3. Run the script:
-
-bash
-Copy
+```
+```bash
 python file_organizer.py
-Usage
-Launch the application.
+```
+## Usage
+1. Launch the application.
 
-Select the folder you want to organize using the Browse button.
+2. Select the folder you want to organize using the Browse button.
 
-Click Preview Changes to see how files will be organized.
+3. Click Preview Changes to see how files will be organized.
 
-Click Organize Files to execute the organization process.
+4. Click Organize Files to execute the organization process.
 
-Check the logs for detailed information about the operations.
+5. Check the logs for detailed information about the operations.
 
-Customization
+6. Customization
 You can customize the file extension mappings in the extension_map dictionary in the script. For example:
 
 python
