@@ -130,7 +130,7 @@ class FileOrganizerGUI:
                             continue
                         
                         # Check if destination folder exists and is writable
-                        if not folder_path.name.exists():
+                        if not folder_path.exists():
                             self.logger.error(f"Destination folder not found: {folder_path}")
                             raise FileNotFoundError(f"Destination folder not found: {folder_path}")
                         
