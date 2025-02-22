@@ -1,4 +1,5 @@
 File Organizer
+
 ![image](https://github.com/user-attachments/assets/4483257a-db7a-41d0-b9fb-016c5ec5e8ad)![image](https://github.com/user-attachments/assets/db80762b-826b-4a3a-a809-0f20429cfef6)![image](https://github.com/user-attachments/assets/5fd26e64-9f89-4191-8985-4e342d55c0a2)
 
 A Python-based GUI application to organize files in a folder by categorizing them into subfolders based on their file types. Built with tkinter for the GUI and shutil for file operations.
