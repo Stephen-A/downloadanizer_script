@@ -121,7 +121,7 @@ class FileOrganizerGUI:
                         self.logger.info(f"Attempting to move: {file_path} to {folder_path / new_name}")
                         
                         # Check if source file exists
-                        if not file_path.name.exists():
+                        if not file_path.exists():
                             self.logger.error(f"Source file not found: {file_path}")
                             messagebox.showwarning(
                                 "File Not Found", 
@@ -221,7 +221,7 @@ class FileOrganizerGUI:
                             new_filename = f"{base_name}_{counter}{file.suffix}"
                             counter += 1
 
-                        planned_moves.setdefault(folder_name, []).append((file.name, new_filename))
+                        planned_moves.setdefault(folder_name, []).append((file, new_filename))
                         total_files += 1
 
             return planned_moves, total_files
