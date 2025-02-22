@@ -31,15 +31,14 @@ Preview of File Organization
 
 ## Steps
 1. Clone the repository:
-
 ```bash
 git clone https://github.com/your-username/file-organizer.git
-2. Navigate to the project directory:
 ```
+2. Navigate to the project directory:
 ```bash
 cd file-organizer
-3. Run the script:
 ```
+3. Run the script:
 ```bash
 python file_organizer.py
 ```
