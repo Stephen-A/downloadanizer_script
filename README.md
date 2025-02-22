@@ -5,6 +5,7 @@
 A Python-based GUI application to organize files in a folder by categorizing them into subfolders based on their file types. Built with tkinter for the GUI and shutil for file operations.
 ---
 ## Features
+
 + File Categorization: Automatically sorts files into folders like Images, Documents, Audio, Video, Archives, and more.
 
 + Customizable Categories: Easily extend or modify the file extension mappings.
