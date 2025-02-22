@@ -28,7 +28,7 @@ Preview of File Organization
 ### Prerequisites
 + Python 3.x
 + tkinter (usually comes pre-installed with Python)
-
+---
 ## Steps
 1. Clone the repository:
 ```bash
@@ -42,6 +42,7 @@ cd file-organizer
 ```bash
 python file_organizer.py
 ```
+---
 ## Usage
 1. Launch the application.
 
@@ -55,8 +56,7 @@ python file_organizer.py
 
 6. Customization
 You can customize the file extension mappings in the extension_map dictionary in the script. For example:
-
-python
+---
 ```bash
 self.extension_map = {
     '.jpg': 'Images',
